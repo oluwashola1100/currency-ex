@@ -4,8 +4,10 @@ const app = express();
 
 app.get("/api/rates", (req, res) => {
   const { base, currency } = req.query;
-  if (!base || !currency) {
-    return res.json({ error: "Default exchange rate is not included" });
+  if (!base) {
+    return res
+      .status(403)
+      .json({ error: "Default exchange rate is not included" });
   }
   axios
     .get(
@@ -19,6 +21,10 @@ app.get("/api/rates", (req, res) => {
         results: { base, date: newDate, rates },
       });
     });
+});
+
+app.use((req, res, next) => {
+  return res.status(404).json({ error: "This page is not available" });
 });
 
 app.listen(8000);
