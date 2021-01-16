@@ -11,7 +11,7 @@ app.get("/api/rates", (req, res) => {
   }
   axios
     .get(
-      `https://api.exchangeratesapi.io/latest?base=${base}&symbols=${currency}`
+      `https://api.exchangeratesapi.io/latest?base=${base.toUpperCase()}&symbols=${currency.toUpperCase()}`
     )
     .then((result) => {
       const { base, date, rates } = result.data;
